@@ -9,6 +9,8 @@ include(cmake/package_setup.cmake)
 include(kis.package.cmake)
 project(${PACKAGE_NAME} VERSION ${PACKAGE_VERSION})
 
+# 3. Handle first-party dependencies (other kis_ packages).
+kis_handle_first_party_dependencies()
 
 # ==============================================================================
 #           PACKAGE DEFINITION BASED ON LIBRARY TYPE
@@ -36,18 +38,13 @@ target_include_directories(${PACKAGE_NAME} PUBLIC
 )
 
 # 7. Link to other dependencies.
-# kis_link_dependencies(TARGET test_package_c PUBLIC kis::core)
+kis_link_dependencies(TARGET ${PACKAGE_NAME} PUBLIC kis::kis_test_package_b)
 
 # 8. Install the package artifacts (library, headers, CMake config).
 kis_install_package()
-
-
 
 # 9. Install any public assets. This applies to both library types.
 kis_install_assets()
 
 # 10. (Optional) Define tests, samples, etc.
-if(KIS_BUILD_TESTS)
-    # The add_subdirectory call should point to your tests directory.
-    # add_subdirectory(test)
-endif()
+add_subdirectory(secondary)

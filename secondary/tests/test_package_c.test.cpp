@@ -4,5 +4,6 @@
 #include <doctest/doctest.h>
 
 TEST_CASE("Fake test that always passes") {
+    kis::test_package_c::hello();
     CHECK(true);
 }
